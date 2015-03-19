@@ -1,0 +1,6 @@
+---
+- hosts: sched
+  user: root
+  roles:
+       - munge
+       - slurm 
