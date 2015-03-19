@@ -3,4 +3,5 @@
   user: root
   roles:
        - munge
+       - mysql
        - slurm 
