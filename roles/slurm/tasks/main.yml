@@ -1,1 +1,30 @@
 ---
+- name: Create Slurm Directory
+  file: path={{ slurm_dir }} state=directory owner=root group=root recurse=yes
+  tags:
+     - slurm-unarchive
+
+- name: Unarchive SLURM
+  shell: /bin/tar -xf slurm-{{ slurm_version }}.tar -C /opt/slurm --strip-components=1
+  args:
+    chdir: ChpcSlurm/roles/slurm/files/
+  tags:
+     - slurm-unarchive
+
+- name: Possible permissions
+  file: path={{ slurm_dir }} state=directory owner=root group=root recurse=yes
+  tags:
+     - slurm-unarchive
+
+- name: Run Slurm Configure
+  shell: 'cd {{ slurm_dir }};{{ item }}'
+  with_items:
+      - ./configure --enable-front-end
+      - make
+      - make install
+  tags:
+     - slurm-install
+
+- name : Slurm Config File
+  tags:
+     - slurm-configure
