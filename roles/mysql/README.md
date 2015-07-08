@@ -1,19 +1,19 @@
 Mysql
 =========
 
-Installation of mysql
+Installation of mysql<br/>
+The following packages are installed mysql, mysql-server, mysql-devel and MySQL-python<br/>
+MySQL-python is used ansible database module
 
 Requirements
 ------------
 
-Requires Internet access for YUM. 
+Requires Internet access for YUM.<br/>
 selinux has to be disabled on the machine
 
 Role Variables
 --------------
 
-*root_password* variable if required for mysql_secure_installation play.
-Either define in vars or define when executing ansible-playbook
 
 Dependencies
 ------------
