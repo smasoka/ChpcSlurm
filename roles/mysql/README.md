@@ -12,7 +12,7 @@ selinux has to be disabled on the machine
 Role Variables
 --------------
 
-root_password variable if required for mysql_secure_installation
+*root_password* variable if required for mysql_secure_installation play.
 Either define in vars or define when executing ansible-playbook
 
 Dependencies
@@ -22,7 +22,7 @@ I guess a repository to download mysql. Either Epel or mysql repos will do just 
 
 Example Playbook
 ----------------
-
+```
 - name: Install mysql
   yum: name={{ item }} state=present
   with_items:
@@ -34,7 +34,7 @@ Example Playbook
 
 
 #ansible-playbook -i hosts slurm.yml --tags=mysql
-
+```
 License
 -------
 
