@@ -1,0 +1,25 @@
+---
+- name: Install mysql
+  yum: name={{ item }} state=present
+  with_items:
+     - mysql
+     - mysql-server
+     - mysql-devel
+     - mysql-libs
+     - MySQL-python
+  tags:
+     - mysql-install
+     - mysql
+
+- name: Enable mysqld service
+  service: name=mysqld enabled=on
+  tags:
+     - mysql-chk
+     - mysql
+
+- name: start mysql
+  service: name=mysqld state=started
+  tags:
+    - mysql-start
+    - mysql
+ 

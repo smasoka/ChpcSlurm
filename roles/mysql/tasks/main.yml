@@ -1,31 +1,4 @@
 ---
-- name: Install mysql
-  yum: name={{ item }} state=present
-  with_items:
-     - mysql
-     - mysql-server
-     - mysql-devel
-     - mysql-libs
-  tags:
-     - mysql-install
-     - mysql
+- include: install.yml
 
-- name: Enable mysqld service
-  service: name=mysqld enabled=on 
-  notify:
-     - start mysql
-  tags:
-     - mysql-chk
-     - mysql
- 
-- name: mysql_secure_installation
-  when: mysql_password is defined
-  template: src=mysql_secure_installation.j2 dest=/tmp/mysql_secure_installation owner=root group=root mode=0600
-  notify:
-     - disable selinux
-     - launch mysql_secure_installation
-     - delete mysql_secure_installation
-     - restart mysql
-  tags:
-     - mysql-secure
-     - mysql 
+- include: mysql_secure_installation.yml
