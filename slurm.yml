@@ -4,4 +4,3 @@
   roles:
        - munge
        - mysql
-       - slurm 

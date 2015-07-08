@@ -7,21 +7,25 @@
      - munge-libs
   tags:
      - install-munge
+     - munge
 
 - name: Create Munge User
   user: name=munge uid=496
   tags:
      - munge-user
+     - munge
 
 - name: Create Munge Group
   group: name=munge gid=496 state=present system=yes
   tags:
      - munge-user
+     - munge
 
 - name: Create munge key
   action: command /usr/sbin/create-munge-key creates=/etc/munge/munge.key
   tags:
      - munge-key
+     - munge
 
 - name: Munge directory permissions
   file: path={{ item }} owner=munge group=munge state=directory recurse=yes
@@ -32,11 +36,13 @@
      - /var/run/munge
   tags:
      - munge-permission
+     - munge
 
 - name: chkconfig munge
   service: name=munge enabled=on
   tags:
      - munge-chk
+     - munge
 
 - name: Start munge
   sudo: true
@@ -44,3 +50,4 @@
   service: name=munge state=started
   tags:
      - munge-start
+     - munge
