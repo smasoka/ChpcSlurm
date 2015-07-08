@@ -44,5 +44,5 @@ BSD
 Author Information
 ------------------
 
-Sakhile Masoka
+Sakhile Masoka<br/>
 Center for High Performance Computing
