@@ -1,2 +1,14 @@
 ---
 # handlers file for mysql
+- name: start mysql
+  service: name=mysqld state=started
+
+- name: restart mysql
+  service: name=mysqld state=restarted
+
+- name: launch mysql_secure_installation
+  action: shell cat /tmp/mysql_secure_installation | /usr/bin/mysql_secure_installation
+
+- name: delete mysql_secure_installation
+  action: file dest=/tmp/mysql_secure_installation state=absent
+  
