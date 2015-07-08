@@ -2,9 +2,9 @@ Munge
 =========
 
 Munge installation
-Creates munge user and group 
-Creates munge key and sets permissions
-Enables the service and starts it
+* Creates munge user and group 
+* Creates munge key and sets permissions
+* Enables the service and starts it
 
 Requirements
 ------------
@@ -24,7 +24,7 @@ No dependencies
 Example Playbook
 ----------------
 
----
+```---
 - name: Install munge
   yum: name={{ item }} state=present
   with_items:
@@ -32,9 +32,10 @@ Example Playbook
      - munge-devel
      - munge-libs
   .......
+  
 
 #ansible-playbook -i hosts slurm.yml --tags=munge
-
+```
 License
 -------
 
