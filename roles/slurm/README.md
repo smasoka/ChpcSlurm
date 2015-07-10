@@ -12,7 +12,7 @@ Requires Munge and Mysql Installation.
 Role Variables
 --------------
 
-Define the slurm_version variable under vars. 
+Define the `slurm_version` and `slurm_dir` variables under vars. 
 
 Dependencies
 ------------
