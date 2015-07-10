@@ -1,3 +1,4 @@
 ---
 slurm_dir: /opt/slurm
-slurm_version: 14.11.2
+slurm_version: 14.11.8
+slurm_config_dir: /opt/slurm/etc

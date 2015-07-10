@@ -1,0 +1,26 @@
+---
+- name: download slurm source
+  get_url: url=http://www.schedmd.com/download/latest/slurm-{{ slurm_version }}.tar.bz2 dest=/tmp
+  tags:
+     - slurm-download
+
+- name: unarchive slurm
+  shell: /bin/tar -xf /tmp/slurm-{{ slurm_version }}.tar.bz2 -C /tmp
+  tags:
+     - slurm-unarchive
+
+- name: create slurm directory
+  file: path={{ slurm_dir }} state=directory owner=root group=root recurse=yes
+  tags:
+     - slurm-install
+
+- name: run slurm configure
+  command: "chdir=/tmp/slurm-{{ slurm_version }} {{ item }}"
+  with_items:
+      - ./configure --prefix={{ slurm_dir }} --enable-front-end
+      - make
+      - make install
+  tags:
+     - slurm-install
+
+
