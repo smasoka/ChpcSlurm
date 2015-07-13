@@ -8,8 +8,8 @@
 #
 # See the slurm.conf man page for more information.
 #
-ClusterName=linux
-ControlMachine=linux0
+ClusterName=ZA_CHPC
+ControlMachine={{ inventory_hostname }}
 #ControlAddr=
 #BackupController=
 #BackupAddr=
@@ -21,16 +21,16 @@ SlurmdPort=6818
 AuthType=auth/munge
 #JobCredentialPrivateKey=
 #JobCredentialPublicCertificate=
-StateSaveLocation=/tmp
-SlurmdSpoolDir=/tmp/slurmd
+StateSaveLocation={{ slurm_config_dir }}/slurm.state
+SlurmdSpoolDir={{ slurm_spool_dir }}
 SwitchType=switch/none
 MpiDefault=none
-SlurmctldPidFile=/var/run/slurmctld.pid
-SlurmdPidFile=/var/run/slurmd.pid
+SlurmctldPidFile={{ slurm_pid_dir }}/slurmctld.pid
+SlurmdPidFile={{ slurm_pid_dir }}/slurmd.pid
 ProctrackType=proctrack/pgid
 #PluginDir=
 CacheGroups=0
-#FirstJobId=
+FirstJobId=1
 ReturnToService=0
 #MaxJobCount=
 #PlugStackConfig=
@@ -75,21 +75,21 @@ FastSchedule=1
 #
 # LOGGING
 SlurmctldDebug=3
-#SlurmctldLogFile=
+SlurmctldLogFile={{ slurm_log_dir }}/slurmctl.log
 SlurmdDebug=3
-#SlurmdLogFile=
+SlurmdLogFile={{ slurm_log_dir }}/slurm.log
 JobCompType=jobcomp/none
 #JobCompLoc=
 #
 # ACCOUNTING
-#JobAcctGatherType=jobacct_gather/linux
-#JobAcctGatherFrequency=30
+JobAcctGatherType=jobacct_gather/linux
+JobAcctGatherFrequency=30
 #
-#AccountingStorageType=accounting_storage/slurmdbd
-#AccountingStorageHost=
-#AccountingStorageLoc=
-#AccountingStoragePass=
-#AccountingStorageUser=
+AccountingStorageType=accounting_storage/slurmdbd
+AccountingStorageHost={{ inventory_hostname }}
+AccountingStorageLoc=
+AccountingStoragePass=
+AccountingStorageUser=
 #
 # COMPUTE NODES
 NodeName=linux[1-32] Procs=1 State=UNKNOWN

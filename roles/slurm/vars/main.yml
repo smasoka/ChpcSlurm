@@ -2,3 +2,7 @@
 slurm_dir: /opt/slurm
 slurm_version: 14.11.8
 slurm_config_dir: /opt/slurm/etc
+slurm_log_dir: /opt/slurm/log
+slurm_spool_dir: /opt/slurm/spool
+slurm_pid_dir: /var/run/slurm
+slurm_database_name: slurm_acct_db

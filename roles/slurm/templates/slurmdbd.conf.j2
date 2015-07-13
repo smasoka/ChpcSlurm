@@ -13,27 +13,27 @@
 #
 # Authentication info
 AuthType=auth/munge
-#AuthInfo=/var/run/munge/munge.socket.2
+AuthInfo=/var/run/munge/munge.socket.2
 #
 # slurmDBD info
 DbdAddr=localhost
-DbdHost=localhost
+DbdHost={{ inventory_hostname }}
 #DbdPort=7031
 SlurmUser=slurm
 #MessageTimeout=300
 DebugLevel=4
 #DefaultQOS=normal,standby
-LogFile=/var/log/slurm/slurmdbd.log
-PidFile=/var/run/slurmdbd.pid
+LogFile={{ slurm_log_dir }}/slurmdbd.log
+PidFile={{ slurm_pid_dir }}/slurmdbd.pid
 #PluginDir=/usr/lib/slurm
-#PrivateData=accounts,users,usage,jobs
+PrivateData=accounts,users,usage,jobs,reservations
 #TrackWCKey=yes
 #
 # Database info
 StorageType=accounting_storage/mysql
 #StorageHost=localhost
 #StoragePort=1234
-StoragePass=password
+StoragePass={{ mysql_slurm_passwd.stdout }}
 StorageUser=slurm
-#StorageLoc=slurm_acct_db
+StorageLoc={{ slurm_database_name }}
 
