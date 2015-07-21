@@ -16,7 +16,7 @@ AuthType=auth/munge
 AuthInfo=/var/run/munge/munge.socket.2
 #
 # slurmDBD info
-DbdAddr=localhost
+DbdAddr={{ inventory_hostname }}
 DbdHost={{ inventory_hostname }}
 #DbdPort=7031
 SlurmUser=slurm
@@ -31,7 +31,7 @@ PrivateData=accounts,users,usage,jobs,reservations
 #
 # Database info
 StorageType=accounting_storage/mysql
-#StorageHost=localhost
+#StorageHost={{ inventory_hostname }}
 #StoragePort=1234
 StoragePass={{ mysql_slurm_passwd.stdout }}
 StorageUser=slurm

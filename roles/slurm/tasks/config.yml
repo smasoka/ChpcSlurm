@@ -50,25 +50,47 @@
   template: src=slurm.conf.j2 dest={{ slurm_config_dir }}/slurm.conf owner=root group=root mode=0644 
   tags:
      - slurm-config
+     - slurm-start
 
 - name: copy slurm database configuration file
   template: src=slurmdbd.conf.j2 dest={{ slurm_config_dir }}/slurmdbd.conf owner=root group=root mode=0644
   tags:
      - slurm-config
+     - slurm-start
 
 - name: copy slurm init script
-  template: src=init.d.slurm.j2 dest=/etc/init.d/slurm owner=root group=root mode=0755
+  template: src=init.d.slurm.j2 dest=/etc/init.d/slurmd owner=root group=root mode=0755
   tags:
      - slurm-config
+     - slurm-start
 
 - name: copy database init script
   template: src=init.d.slurmdbd.j2 dest=/etc/init.d/slurmdbd owner=root group=root mode=0755
   tags:
      - slurm-config
 
-- name: create slurm user
-  user: name=slurm comment="SLURM User"
-  tags:
-     - slurm-config 
+- name: add sbin path
+  environment:
+     PATH: {{ slurm_dir }}/sbin:{{ ansible_env.PATH }}
 
-  
+- name: add bin path
+  environment:
+     PATH: {{ slurm_dir }}/bin:{{ ansible_env.PATH }}
+
+
+- name: add library path
+  environment:
+     LD_LIBRARY_PATH: {{ slurm_dir }}/lib:{{ ansible_env.LD_LIBRARY_PATH }}
+
+
+- name: start slurmdbd
+  service: name=slurmdbd enabled=yes state=started
+  tags:
+     - slurm-start
+# Initialise the database
+
+
+- name: start slurmd
+  service: name=slurmd enabled=yes state=started
+  tags:
+     - slurm-start

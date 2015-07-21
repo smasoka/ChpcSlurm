@@ -87,10 +87,10 @@ JobAcctGatherFrequency=30
 #
 AccountingStorageType=accounting_storage/slurmdbd
 AccountingStorageHost={{ inventory_hostname }}
-AccountingStorageLoc=
-AccountingStoragePass=
-AccountingStorageUser=
+AccountingStorageLoc={{ slurm_database_name }}
+#AccountingStoragePass=
+#AccountingStorageUser=
 #
 # COMPUTE NODES
-NodeName=snode[1-32] NodeHostName=slurm.chpc.ac.za NodeAddr=127.0.0.1
+NodeName=snode[1-32] NodeHostName=slurm.chpc.ac.za NodeAddr=127.0.0.1 State=UNKNOWN
 PartitionName=debug Nodes=snode[1-32] Default=YES MaxTime=INFINITE State=UP
