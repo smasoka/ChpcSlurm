@@ -36,10 +36,6 @@
   tags:
      - slurm-config
 
-- debug: var=mysql_slurm_passwd
-- debug: msg="{{ mysql_slurm_passwd.stdout }}"
-- debug: msg="{{ mysql_slurm_passwd.stderr }}"
-
 - name: create database user
   mysql_user: name=slurm host={{ item }} password={{ mysql_slurm_passwd.stdout }} priv={{ slurm_database_name}}.*:ALL state=present
   with_items:
@@ -49,12 +45,6 @@
      - localhost
   tags:
      - slurm-config
-
-- debug: var=mysql_slurm_passwd
-
-- debug: msg="{{ mysql_slurm_passwd.stdout }}"
-
-- debug: msg="{{ mysql_slurm_passwd.stderr }}"
 
 - name: copy slurm configuration file
   template: src=slurm.conf.j2 dest={{ slurm_config_dir }}/slurm.conf owner=root group=root mode=0644 
