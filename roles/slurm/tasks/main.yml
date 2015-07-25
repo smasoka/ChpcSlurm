@@ -2,3 +2,6 @@
 - include: install.yml
 
 - include: config.yml
+# Setups default cluster, account and user to testing
+# Comment out if needed
+- include: cluster_setup.yml
