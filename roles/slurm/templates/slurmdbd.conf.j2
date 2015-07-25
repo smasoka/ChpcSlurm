@@ -16,8 +16,8 @@ AuthType=auth/munge
 AuthInfo=/var/run/munge/munge.socket.2
 #
 # slurmDBD info
-DbdAddr={{ inventory_hostname }}
-DbdHost={{ inventory_hostname }}
+DbdAddr=localhost
+DbdHost={{ inventory_hostname_short }}
 #DbdPort=7031
 SlurmUser=slurm
 #MessageTimeout=300

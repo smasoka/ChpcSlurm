@@ -1,0 +1,27 @@
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1:${PATH:+"$PATH"}"
+    fi
+}
+
+manpathadd() {
+    if [ -d "$1" ] && [[ ":$MANPATH:" != *":$1:"* ]]; then
+        MANPATH="${MANPATH:+"$MANPATH:"}$1"
+    fi
+}
+
+libpathadd() {
+    if [ -d "$1" ] && [[ ":$LD_LIBRARY_PATH:" != *":$1:"* ]]; then
+        LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+"$LD_LIBRARY_PATH:"}$1"
+    fi
+}
+
+pathadd {{ slurm_dir }}/bin/ PATH
+pathadd {{ slurm_dir }}/sbin/ PATH
+export PATH
+
+export MANPATH={{ slurm_dir }}/share/man/:$MANPATH
+
+libpathadd {{ slurm_dir }}/lib/ LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+

@@ -1,12 +1,4 @@
 ---
-- name: create slurm directories
-  file: path={{ item }} state=directory owner=root group=root recurse=yes
-  with_items:
-     - "{{ slurm_config_dir }}"
-     - "{{ slurm_pid_dir }}"
-  tags:
-     - slurm-config
-
 - name: create slurm group
   group: name=slurm state=present
   tags:
@@ -17,9 +9,11 @@
   tags:
      - slurm-config
 
-- name: create slurm directories with slurm permissions
-  file: path={{ item }} state=directory owner=slurm group=slurm recurse=yes
+- name: create slurm directories
+  file: path={{ item }} state=directory owner=slurm group=root recurse=yes
   with_items:
+     - "{{ slurm_config_dir }}"
+     - "{{ slurm_pid_dir }}"
      - "{{ slurm_log_dir }}"
      - "{{ slurm_spool_dir }}"
   tags:
@@ -69,20 +63,12 @@
   tags:
      - slurm-config
 
-- name: add sbin path
-  environment:
-     PATH: {{ slurm_dir }}/sbin:{{ ansible_env.PATH }}
+- name: add slurm to environment
+  template: src=slurm.sh.j2 dest=/etc/profile.d/slurm.sh owner=root group=root mode=0755
+  tags:
+     - slurm-env
 
-- name: add bin path
-  environment:
-     PATH: {{ slurm_dir }}/bin:{{ ansible_env.PATH }}
-
-
-- name: add library path
-  environment:
-     LD_LIBRARY_PATH: {{ slurm_dir }}/lib:{{ ansible_env.LD_LIBRARY_PATH }}
-
-
+# slurm environment is source for each action since its a new ssh session
 - name: start slurmdbd
   service: name=slurmdbd enabled=yes state=started
   tags:
@@ -90,6 +76,7 @@
 # Initialise the database
 
 
+# slurm environment is sourced for each action since its a new ssh session
 - name: start slurmd
   service: name=slurmd enabled=yes state=started
   tags:
