@@ -1,0 +1,16 @@
+---
+# Adds a default cluster, account and user for testing 
+- name: create default cluster
+  command: sacctmgr -i add cluster {{ cluster_name }}
+  tags:
+     - slurm-acct
+
+- name: create default account
+  command: sacctmgr -i add account {{ default_account }} Description={{ default_account_description }} Organization={{ default_account_organization }}
+  tags:
+     - slurm-acct
+
+- name: add default user
+  command: sacctmgr -i add user {{ default_user }} DefaultAccount={{ default_account }}
+  tags:
+     - slurm-acct
