@@ -10,7 +10,7 @@
 #
 ClusterName=ZA_CHPC
 ControlMachine={{ inventory_hostname }}
-#ControlAddr=
+ControlAddr={{ inventory_hostname }}
 #BackupController=
 #BackupAddr=
 #
@@ -56,24 +56,42 @@ InactiveLimit=0
 MinJobAge=300
 KillWait=30
 Waittime=0
+
 #
 # SCHEDULING
+#
 SchedulerType=sched/backfill
 #SchedulerAuth=
 #SchedulerPort=
 #SchedulerRootFilter=
 SelectType=select/linear
 FastSchedule=1
-#PriorityType=priority/multifactor
-#PriorityDecayHalfLife=14-0
+#Enables multifactor scheduling
+PriorityType=priority/multifactor
+#Contribution of historical usage on the composite usage value
+PriorityDecayHalfLife=48:00:00
+#Frequency to calculate priority change (applying decay half life factor)
+PriorityCalcPeriod=05:00
+#The larger the job, the greater its job size priority
+PriorityFavorSmall=NO
 #PriorityUsageResetPeriod=14-0
-#PriorityWeightFairshare=100000
-#PriorityWeightAge=1000
-#PriorityWeightPartition=10000
-#PriorityWeightJobSize=1000
-#PriorityMaxAge=1-0
+#Fairshare  100000  - More weight on the formula
+#Partition    10000    - Medium weight on the formula
+#JobSize     10000   - Medium weight on the formula
+#Age	        1000     - Minimum weight on the formula
+PriorityWeightFairshare=100000
+PriorityWeightAge=1000
+PriorityWeightPartition=10000
+PriorityWeightJobSize=1000
+#Dont use Weight QOS
+PriorityWeightQOS=0
+# 120 hours the job is starving, priority maxes out.
+PriorityMaxAge=5-0
+
+
 #
 # LOGGING
+#
 SlurmctldDebug=3
 SlurmctldLogFile={{ slurm_log_dir }}/slurmctl.log
 SlurmdDebug=3
@@ -82,15 +100,17 @@ JobCompType=jobcomp/none
 #JobCompLoc=
 #
 # ACCOUNTING
+#
 JobAcctGatherType=jobacct_gather/linux
 JobAcctGatherFrequency=30
-#
 AccountingStorageType=accounting_storage/slurmdbd
 AccountingStorageHost={{ inventory_hostname }}
 AccountingStorageLoc={{ slurm_database_name }}
 #AccountingStoragePass=
 #AccountingStorageUser=
+
 #
 # COMPUTE NODES
+#
 NodeName=snode[1-32] NodeHostName=slurm.chpc.ac.za NodeAddr=127.0.0.1 State=UNKNOWN
 PartitionName=debug Nodes=snode[1-32] Default=YES MaxTime=INFINITE State=UP
