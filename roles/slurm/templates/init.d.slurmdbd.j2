@@ -90,6 +90,7 @@ stop() {
     rc_status -v
     echo
     rm -f /var/lock/subsys/slurmdbd
+    rm -f /var/run/slurm/slurmdbd.pid
 }
 
 slurmstatus() {
