@@ -28,3 +28,15 @@ sacctmgr -i add qos intel_mic set MaxWallDurationPerJob=14-00
 # QOS for wallq
 sacctmgr -i add qos wall set MaxCpusPerUser=4
 sacctmgr -i modify qos wall set MaxWallDurationPerJob=21-00
+
+###########################
+# Link Partitions to QOS  #
+###########################
+
+scontrol update partition=workq AllowQos=work
+scontrol update partition=accelrys AllowQos=accelrys
+scontrol update partition=priorityqq AllowQos=priority
+scontrol update partition=specialq AllowQos=special
+scontrol update partition=keplaq AllowQos=kepla
+scontrol update partition=intel_micq AllowQos=intel_mic
+scontrol update partition=wallq AllowQos=wall
